@@ -3,7 +3,6 @@ import {
   useContext,
   useState,
   type ReactNode,
-  useEffect,
 } from "react";
 
 // define the data type structure
