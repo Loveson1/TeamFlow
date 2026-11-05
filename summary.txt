@@ -1,0 +1,19 @@
+Final wrap up for today
+
+So today basically i built
+Authcontext and Project context then task context halfway
+
+When i started it felt scary but using ai to guide myself then later 
+increasing the challenge a bit made the difference
+And the fact that i had to repeatedly build similar component over and over more like 
+iterated the idea and made me to start seeing the why behind what i was building
+
+ONE TAKEAWAY FOR ME WOULD BE THE REPETITION OF SIMILAR COMPONENT 
+AND STEADILY INCREASING THE CHALLENGE A BIT
+
+_______________________________________________
+
+Tomorrow
+I try to rebuild theme context first and use it 
+I complete taskContext building on my own 
+then move to screens 

@@ -1,4 +1,4 @@
-import  {
+import {
   createContext,
   useState,
   useContext,
@@ -14,7 +14,9 @@ interface ThemeContextType {
 
 // create context
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined,
+);
 
 // define context provider type
 interface ThemeProviderProps {
@@ -28,15 +30,18 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    theme === "light"
-      ? root.classList.add("light")
-      : root.classList.add("dark");
+    if (theme === "light") {
+      root.classList.add("light");
+      root.classList.remove("dark"); // ✅ Remove dark when light is active
+    } else {
+      root.classList.add("dark");
+      root.classList.remove("light");
+    }
   }, [theme]);
 
- const toggleTheme = ()=>{
-    setTheme((prev) => (prev === "light" ? "dark" : "light"))
- }
-
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -45,11 +50,10 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
   );
 }
 
-
-
-export const useTheme = ():ThemeContextType => {
-    const context = useContext(ThemeContext)
-    if (!context){
-     throw new Error("Use context in right component")
-    } return context;
-}
+export const useTheme = (): ThemeContextType => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("Use context in right component");
+  }
+  return context;
+};
