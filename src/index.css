@@ -20,22 +20,33 @@
 
 @layer base {
   body {
-    @apply font-sans bg-background text-text m-50;
+    @apply font-sans bg-background text-text ;
   }
 
   p {
-    @apply text-secondaryText;
+    @apply text-text;
   }
+  
 }
 
 @layer component {
   .card {
+    @apply bg-card-background   py-5 px-2 shadow-xs;
+  }
+  .card2 {
     @apply bg-card-background rounded-2xl  p-5  shadow-xs border-accent border;
   }
 }
 
 @layer utilities {
   button {
-    @apply bg-purple p-4 py-2 hover:bg-purple-950;
+    @apply  px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200 ;
   }
+  .button2 {
+    @apply bg-purple p-4 py-2 hover:bg-purple-950 hover:text-accent;
+  }
+.flex-center{
+ @apply flex  items-center gap-x-2 w-full
+}
+  
 }

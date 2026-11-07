@@ -13,7 +13,30 @@ AND STEADILY INCREASING THE CHALLENGE A BIT
 
 _______________________________________________
 
-Tomorrow
-I try to rebuild theme context first and use it 
-I complete taskContext building on my own 
-then move to screens 
+Today task
+
+1. I rebuild taskContext building on my own in 15 mins
+2. Build screens 2hr
+3. Write summary 20mins
+
+
+_______________________________________________
+
+Final wrap for yesterday
+spent quite sometime learning and building the task context
+I learn about javascript  Property Overwriting  where you can do {...items, ...updates}
+and if theres a change in any of the properties of the previous, it get overwritten. 
+
+I also learnt the difference between type and inteface, while interface always 
+creates an object shape, type creates a string shape and an object shape and other shapes
+
+i also learnt the importance of the context guiderails where a function is written 
+such that any component using the context while they are not wrapped by it will throw 
+an error this make devs catch error quicker. 
+
+_______________________________________________
+
+
+it got quite exhausting building the screen i spent few hours buiding the skeleton
+i felt what made it was spending so much time on the learning aspect
+

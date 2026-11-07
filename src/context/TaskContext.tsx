@@ -97,6 +97,6 @@ export function useTask(): TaskContexType {
 // i have few question
 
 // 1. if i want to use data from outside context instead of just copying the mockdata how will i do it
-// 2. why do we write tis custom saftey hook useTask useAuth i mean isit possible to use context in wrong component
-//3. why is update taking new status of todo inprgress and completed
+// 2. why do we write this custom saftey hook useTask useAuth i mean is it possible to use context in wrong component
+// 3. why is update taking new status of todo inprgress and completed
 // i noticed in the update function we are just mapping through to pick the item and not updating it info
