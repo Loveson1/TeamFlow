@@ -11,8 +11,7 @@ function App() {
  <ThemeProvider>
     <AuthProvider>
       <ProjectProvider>
-        <TaskProvider>
-         
+        <TaskProvider> 
           <Sidebar />
         </TaskProvider>
       </ProjectProvider>

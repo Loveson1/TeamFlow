@@ -11,7 +11,8 @@
 // use that to shw or hide the code although idont now how i will do this clearly yet.
 
 // local data
-// i dont qite get this part
+// the local data state are
+// the expand state and the project list state
 
 // the arctecture is such that
 // it will contain User icon then a teme swicher button and an expand restract button,
@@ -19,11 +20,11 @@
 // then a search button
 // then a project button
 // then a seting button for admin only
-// and fially a logout button
+// and finally a logout button
 
 // */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { useProject } from "../context/ProjectContext";
@@ -33,168 +34,123 @@ import {
   LuLogOut,
   LuSearch,
   LuCirclePlus,
-  LuSunMoon,
+  LuSun,
+  LuMoon,
   LuPanelLeftClose,
+  LuPanelRightClose,
+  LuChevronRight,
+  LuChevronDown,
 } from "react-icons/lu";
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const { projects } = useProject();
-  const { toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const [showProjectsList, setShowProjectsList] = useState<boolean>(false);
+
+  const expand = isExpanded ? "w-full" : "w-max";
 
   return (
-    <div className=" w-64 min-h-screen flex flex-col card">
-      <div className="flex  items-center justify-between ">
-        <div className="flex-center px-2 ">
-          <div className="size-7 bg-purple rounded-full font-bold text-white flex items-center justify-center">{user?.name.charAt(0)}A</div>
-          <p>{user?.name} Adeola</p>
-        </div>
+    <div
+      className={`min-h-screen flex flex-col card transition-all duration-200 ${isExpanded ? "w-64 " : "w-16"}`}
+    >
+      <div className="flex  items-center justify-between  ">
+        {isExpanded && (
+          <div className="flex-center px-2 ">
+            <div className="size-7 bg-purple rounded-full font-bold text-white flex items-center justify-center">
+              {user?.name.charAt(0)}A
+            </div>
+            <p>{user?.name} Adeola</p>
+          </div>
+        )}
 
         <div className="flex gap-2 items-center">
-          <button onClick={toggleTheme}>
-            <LuSunMoon className="size-5" />
-          </button>
-          <button>
-            <LuPanelLeftClose className="size-5" />
+          {isExpanded && (
+            <button onClick={toggleTheme}>
+             {theme === "light" ? <LuMoon className="size-5" />: <LuSun className="size-5"/> }
+            </button>
+          )}
+          <button onClick={() => setIsExpanded(!isExpanded)}>
+            {isExpanded ? (
+              <LuPanelLeftClose className="size-5" />
+            ) : (
+              <LuPanelRightClose className="size-5" />
+            )}
           </button>
         </div>
       </div>
 
-      <nav className="mt-5">
-        <button className="flex-center  group">
-          <LuCirclePlus className="size-5 group-hover:text-accent " />
-          <p className="group-hover:text-accent ">Add Task</p>
+      <nav className="mt-5 flex flex-col gap-y-2">
+        <button className={`flex-center group ${expand}`}>
+          <LuCirclePlus className="size-5 group-hover:text-accent" />
+          {isExpanded && <p className="group-hover:text-accent">Add Task</p>}
         </button>
 
-        <button className="flex-center">
-          <LuSearch className="size-5" />
-        Search
+        <button className={`flex-center group ${expand} `}>
+          <LuSearch className="size-5 group-hover:text-accent" />
+          {isExpanded && <p className="">Search</p>}
         </button>
 
-        <button className="flex-center">
-          <LuFolder className="size-5" />
-          Projects
+        <button className={`flex-center justify-between group h-10 ${expand}`}>
+          <div className="flex-center ">
+            {" "}
+            <LuFolder className="size-5 group-hover:text-accent" />
+            {isExpanded && <p>Projects</p>}
+          </div>
+          {isExpanded && (
+            <div
+              onClick={() => setShowProjectsList(!showProjectsList)}
+              className=" hover:bg-purple-800 rounded p-1"
+            >
+              {showProjectsList ? (
+                <LuChevronDown className="size-5  " />
+              ) : (
+                <LuChevronRight className="size-5" />
+              )}
+            </div>
+          )}
         </button>
 
-        {user?.role === "ADMIN" && (
-          <button>
-            <LuSettings className="size-5" /> System settings
-          </button>
+        {showProjectsList && isExpanded && (
+          <div>
+            {projects.map((project) => (
+              <button className="flex w-full" key={project.id}>
+                <p># {project.name}</p>
+              </button>
+            ))}
+          </div>
         )}
+
+        {/* {user?.role === "ADMIN" && ( */}
+        <button className={`flex-center group ${expand}`}>
+          <LuSettings className="size-5 group-hover:text-accent" />
+          {isExpanded && <p>System settings</p>}
+        </button>
+        {/* )} */}
       </nav>
 
-      <div className="mt-auto w-full">
-        <button onClick={logout} className="flex-center">
-          <LuLogOut className="size-5" />
-          logout
+      <div className="mt-auto">
+        <button
+          onClick={logout}
+          className={`flex-center hover:bg-red-900 group ${isExpanded ? "w-full" : ""}`}
+        >
+          <LuLogOut className="size-5 group-hover:text-accent" />
+          {isExpanded && <p>logout</p>}
         </button>
       </div>
     </div>
   );
 }
 
-// import React, { useState } from "react";
-// import { useAuth } from "../context/AuthContext";
-// import { useTheme } from "../context/ThemeContext";
-// import { useProject } from "../context/ProjectContext";
 
-// export default function Sidebar() {
-//   const { user, logout } = useAuth();
-//   const { projects } = useProject();
-//   const { theme, toggleTheme } = useTheme();
+// So amigo im done building it i spent 6hours on building this alone , im really concerned abut my slowness although i learnt so much building this
 
-//   // 🗺️ Layout Local States
-//   const [isExpanded, setIsExpanded] = useState<boolean>(true);
-//   const [showProjectsList, setShowProjectsList] = useState<boolean>(false);
-
-//   return (
-//     <div className={`min-h-screen bg-card-background text-text p-4 flex flex-col justify-between border-r border-accent transition-all duration-300 ${isExpanded ? 'w-64' : 'w-20'}`}>
-
-//       {/* 🔝 TOP SECTION: Branding & Core Utility Controls */}
-//       <div className="flex flex-col gap-6">
-//         <div className="flex items-center justify-between">
-//           <div className="flex items-center gap-3">
-//             <div className="w-8 h-8 rounded-full bg-purple flex items-center justify-center font-bold text-white">
-//               {user?.name.charAt(0)}
-//             </div>
-//             {isExpanded && <p className="font-sans font-bold">{user?.name}</p>}
-//           </div>
-
-//           {/* Toggle Expansion State */}
-//           <button
-//             onClick={() => setIsExpanded(!isExpanded)}
-//             className="p-1 hover:bg-background rounded text-secondary-text"
-//           >
-//             {isExpanded ? "◁" : "▷"}
-//           </button>
-//         </div>
-
-//         {/* Theme Switching Trigger */}
-//         <button
-//           onClick={toggleTheme}
-//           className="flex items-center gap-3 p-2 hover:bg-background rounded w-full text-left"
-//         >
-//           <span>🌓</span>
-//           {isExpanded && <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>}
-//         </button>
-
-//         {/* 🎛️ CORE NAVIGATION ACTIONS */}
-//         <nav className="flex flex-col gap-2">
-//           <button className="flex items-center gap-3 p-2 hover:bg-background rounded w-full text-left text-purple font-semibold">
-//             <span>➕</span>
-//             {isExpanded && <p>Add Task</p>}
-//           </button>
-
-//           <button className="flex items-center gap-3 p-2 hover:bg-background rounded w-full text-left">
-//             <span>🔍</span>
-//             {isExpanded && <p>Search</p>}
-//           </button>
-
-//           {/* 📁 PROJECT LIST DROPDOWN ENGINE */}
-//           <div className="flex flex-col">
-//             <button
-//               onClick={() => setShowProjectsList(!showProjectsList)}
-//               className="flex items-center justify-between p-2 hover:bg-background rounded w-full text-left"
-//             >
-//               <div className="flex items-center gap-3">
-//                 <span>📁</span>
-//                 {isExpanded && <p>Projects</p>}
-//               </div>
-//               {isExpanded && (<span>{showProjectsList ? "▾" : "▸"}</span>)}
-//             </button>
-
-//             {/* Render sub-list container only if expanded and opened */}
-//             {showProjectsList && isExpanded && (
-//               <div className="pl-8 mt-1 flex flex-col gap-1 border-l border-accent">
-//                 {projects.map((project) => (
-//                   <div key={project.id} className="p-1 text-sm text-secondary-text hover:text-text cursor-pointer truncate">
-//                     {project.name}
-//                   </div>
-//                 ))}
-//               </div>
-//             )}
-//           </div>
-//         </nav>
-//       </div>
-
-//       {/* 📥 BOTTOM SECTION: Permissions & Session Management */}
-//       <div className="flex flex-col gap-2">
-//         {user?.role === "ADMIN" && (
-//           <button className="flex items-center gap-3 p-2 hover:bg-background rounded w-full text-left text-orange-400">
-//             <span>⚙️</span>
-//             {isExpanded && <span>System Settings</span>}
-//           </button>
-//         )}
-
-//         <button
-//           onClick={logout}
-//           className="flex items-center gap-3 p-2 hover:bg-red-500/10 text-red-400 rounded w-full text-left"
-//         >
-//           <span>🚪</span>
-//           {isExpanded && <span>Logout</span>}
-//         </button>
-//       </div>
-
-//     </div>
-//   );
-// }
+// Learnt how to use the expand
+// learnt how to use boolean to show or hide something
+// learnt how to hide the text only and how to group hover for button text and icon
+//but i was slow spent 3 days on this 2 hours daily we need to adjust going forward
+// also i noticed when i change react icons 
+// also i noticed when i change react icons spelling, the whole app triggers why is that
+// also i noticed i repeated several codes here which i believ theres a way i can optimize the code more to follow dry principle

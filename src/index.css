@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #6b6375;
+  --color-accent:#e4e4e7;
   --color-text: #e4e4e7;
   --color-secondaryText: #a1a1aa;
   --color-background: #121212;
@@ -24,7 +24,7 @@
   }
 
   p {
-    @apply text-text;
+    @apply text-text group-hover:text-accent;
   }
   
 }
@@ -46,7 +46,7 @@
     @apply bg-purple p-4 py-2 hover:bg-purple-950 hover:text-accent;
   }
 .flex-center{
- @apply flex  items-center gap-x-2 w-full
+ @apply flex  items-center gap-x-2 
 }
   
 }
