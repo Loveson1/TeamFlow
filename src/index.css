@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent:#e4e4e7;
+  --color-accent: #e4e4e7;
   --color-text: #e4e4e7;
   --color-secondaryText: #a1a1aa;
   --color-background: #121212;
@@ -20,13 +20,12 @@
 
 @layer base {
   body {
-    @apply font-sans bg-background text-text ;
+    @apply font-sans bg-background text-text;
   }
 
   p {
     @apply text-text group-hover:text-accent;
   }
-  
 }
 
 @layer component {
@@ -40,13 +39,12 @@
 
 @layer utilities {
   button {
-    @apply  px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200 ;
+    @apply px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200;
   }
   .button2 {
     @apply bg-purple p-4 py-2 hover:bg-purple-950 hover:text-accent;
   }
-.flex-center{
- @apply flex  items-center gap-x-2 
-}
-  
+  .flex-center {
+    @apply flex  items-center gap-x-2;
+  }
 }

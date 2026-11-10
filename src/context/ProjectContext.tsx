@@ -4,11 +4,20 @@ interface Project {
   name: string;
   id: string;
   description: string;
+  assignedTo: string[];
 }
 
 interface ProjectContextType {
   projects: Project[];
-  createProject: (name: string, description: string) => void;
+  createProject: (
+    name: string,
+    description: string,
+    assignedTo: string[],
+  ) => void;
+  updateProject: (
+    id: string,
+    update: { name?: string; description?: string; assignedTo?: string[] },
+  ) => void;
 }
 
 interface ProjectProps {
@@ -23,28 +32,44 @@ export default function ProjectProvider({ children }: ProjectProps) {
       id: "proj_0001",
       name: "Website Project",
       description: "A mini website project for a cook house in Abidjan",
+      assignedTo: ["usr_worker_2"],
     },
   ]);
 
-  const createProject = (name: string, description: string) => {
+  const createProject = (
+    name: string,
+    description: string,
+    assignedTo: string[],
+  ) => {
     setProjects([
       ...projects,
       {
         id: `proj_${Math.random() * 1000}`,
         name: name,
         description: description,
+        assignedTo: assignedTo,
       },
     ]);
   };
 
+  const updateProject = (
+    id: string,
+    update: { name?: string; description?: string; assignedTo?: string[] },
+  ) => {
+    setProjects(
+      projects.map((project) =>
+        project.id === id ? { ...project, ...update } : project,
+      ),
+    );
+  };
   return (
-    <ProjectContext.Provider value={{ projects, createProject }}>
+    <ProjectContext.Provider value={{ projects, createProject, updateProject }}>
       {children}
     </ProjectContext.Provider>
   );
 }
 
-export function useProject():ProjectContextType {
+export function useProject(): ProjectContextType {
   const context = useContext(ProjectContext);
   if (!context) {
     throw new Error("Use Context in right component");

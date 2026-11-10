@@ -69,7 +69,11 @@ export default function Sidebar() {
         <div className="flex gap-2 items-center">
           {isExpanded && (
             <button onClick={toggleTheme}>
-             {theme === "light" ? <LuMoon className="size-5" />: <LuSun className="size-5"/> }
+              {theme === "light" ? (
+                <LuMoon className="size-5" />
+              ) : (
+                <LuSun className="size-5" />
+              )}
             </button>
           )}
           <button onClick={() => setIsExpanded(!isExpanded)}>
@@ -93,9 +97,10 @@ export default function Sidebar() {
           {isExpanded && <p className="">Search</p>}
         </button>
 
+
+       {/* PROJECT LIST DROPDOWN ENGINE */}
         <button className={`flex-center justify-between group h-10 ${expand}`}>
           <div className="flex-center ">
-            {" "}
             <LuFolder className="size-5 group-hover:text-accent" />
             {isExpanded && <p>Projects</p>}
           </div>
@@ -123,12 +128,12 @@ export default function Sidebar() {
           </div>
         )}
 
-        {/* {user?.role === "ADMIN" && ( */}
-        <button className={`flex-center group ${expand}`}>
-          <LuSettings className="size-5 group-hover:text-accent" />
-          {isExpanded && <p>System settings</p>}
-        </button>
-        {/* )} */}
+        {user?.role === "ADMIN" && (
+          <button className={`flex-center group ${expand}`}>
+            <LuSettings className="size-5 group-hover:text-accent" />
+            {isExpanded && <p>System settings</p>}
+          </button>
+        )}
       </nav>
 
       <div className="mt-auto">
@@ -144,13 +149,12 @@ export default function Sidebar() {
   );
 }
 
-
 // So amigo im done building it i spent 6hours on building this alone , im really concerned abut my slowness although i learnt so much building this
 
 // Learnt how to use the expand
 // learnt how to use boolean to show or hide something
 // learnt how to hide the text only and how to group hover for button text and icon
-//but i was slow spent 3 days on this 2 hours daily we need to adjust going forward
-// also i noticed when i change react icons 
+// but i was slow spent 3 days on this 2 hours daily we need to adjust going forward
+// also i noticed when i change react icons
 // also i noticed when i change react icons spelling, the whole app triggers why is that
 // also i noticed i repeated several codes here which i believ theres a way i can optimize the code more to follow dry principle

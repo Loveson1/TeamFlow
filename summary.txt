@@ -40,3 +40,15 @@ _______________________________________________
 it got quite exhausting building the screen i spent few hours buiding the skeleton
 i felt what made it was spending so much time on the learning aspect
 
+
+_______________________________________________
+/ Learnt how to use the expand
+// learnt how to use boolean to show or hide something
+// learnt how to hide the text only and how to group hover for button text and icon
+// Now i use a framework to build screen 
+
+whats the local data to the comp
+whats the context it will use
+what does the architecture look like
+How can I use the dry principle
+
