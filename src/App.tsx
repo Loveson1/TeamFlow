@@ -13,8 +13,15 @@ function App() {
     <AuthProvider>
       <ProjectProvider>
         <TaskProvider> 
-          <Sidebar />
-          <Project/>
+          <div className="flex min-h-screen bg-background text-text">
+              
+              <Sidebar />
+
+              <main className="flex-1 p-6 ">
+                <Project />
+              </main>
+
+            </div>
         </TaskProvider>
       </ProjectProvider>
     </AuthProvider>

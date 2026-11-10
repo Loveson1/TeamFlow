@@ -34,6 +34,32 @@ export default function ProjectProvider({ children }: ProjectProps) {
       description: "A mini website project for a cook house in Abidjan",
       assignedTo: ["usr_worker_2"],
     },
+    {
+      id: "proj_0002",
+      name: "Brand Make Over",
+      description: "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
+      assignedTo: ["usr_worker_3"],
+    },
+
+    {
+      id: "proj_0003",
+      name: "Marketing Campaign",
+      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      assignedTo: ["usr_worker_4"],
+    },
+    {
+      id: "proj_0001",
+      name: "Website Project",
+      description: "A mini website project for a cook house in Abidjan",
+      assignedTo: ["usr_worker_2"],
+    },
+   
+    {
+      id: "proj_0003",
+      name: "Marketing Campaign",
+      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      assignedTo: ["usr_worker_4"],
+    },
   ]);
 
   const createProject = (

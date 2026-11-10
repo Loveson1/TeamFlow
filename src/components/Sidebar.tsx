@@ -99,7 +99,7 @@ export default function Sidebar() {
 
 
        {/* PROJECT LIST DROPDOWN ENGINE */}
-        <button className={`flex-center justify-between group h-10 ${expand}`}>
+        <button className={`flex-center justify-between group h-9 ${expand}`}>
           <div className="flex-center ">
             <LuFolder className="size-5 group-hover:text-accent" />
             {isExpanded && <p>Projects</p>}
