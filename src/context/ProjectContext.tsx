@@ -29,7 +29,7 @@ const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 export default function ProjectProvider({ children }: ProjectProps) {
   const [projects, setProjects] = useState<Project[]>([
     {
-      id: "proj_0001",
+      id: "proj_0010",
       name: "Website Project",
       description: "A mini website project for a cook house in Abidjan",
       assignedTo: ["usr_worker_2"],
@@ -55,7 +55,58 @@ export default function ProjectProvider({ children }: ProjectProps) {
     },
    
     {
-      id: "proj_0003",
+      id: "proj_0005",
+      name: "Marketing Campaign",
+      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      assignedTo: ["usr_worker_4"],
+    },
+     {
+      id: "proj_1002",
+      name: "Brand Make Over",
+      description: "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
+      assignedTo: ["usr_worker_3"],
+    },
+
+    {
+      id: "proj_0303",
+      name: "Marketing Campaign",
+      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      assignedTo: ["usr_worker_4"],
+    },
+    {
+      id: "proj_0401",
+      name: "Website Project",
+      description: "A mini website project for a cook house in Abidjan",
+      assignedTo: ["usr_worker_2"],
+    },
+   
+    {
+      id: "proj_0605",
+      name: "Marketing Campaign",
+      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      assignedTo: ["usr_worker_4"],
+    },
+     {
+      id: "proj_0420",
+      name: "Website Project",
+      description: "A mini website project for a cook house in Abidjan",
+      assignedTo: ["usr_worker_2"],
+    },
+   
+    {
+      id: "proj_0651",
+      name: "Marketing Campaign",
+      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      assignedTo: ["usr_worker_4"],
+    }, {
+      id: "proj_1401",
+      name: "Website Project",
+      description: "A mini website project for a cook house in Abidjan",
+      assignedTo: ["usr_worker_2"],
+    },
+   
+    {
+      id: "proj_0615",
       name: "Marketing Campaign",
       description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
       assignedTo: ["usr_worker_4"],
@@ -67,15 +118,15 @@ export default function ProjectProvider({ children }: ProjectProps) {
     description: string,
     assignedTo: string[],
   ) => {
-    setProjects([
-      ...projects,
+    setProjects((prev) => ([
+      ...prev,
       {
-        id: `proj_${Math.random() * 1000}`,
+        id: `proj_${crypto.randomUUID()}`,
         name: name,
         description: description,
         assignedTo: assignedTo,
       },
-    ]);
+    ]));
   };
 
   const updateProject = (
@@ -83,7 +134,8 @@ export default function ProjectProvider({ children }: ProjectProps) {
     update: { name?: string; description?: string; assignedTo?: string[] },
   ) => {
     setProjects(
-      projects.map((project) =>
+      (prev) =>
+      prev.map((project) =>
         project.id === id ? { ...project, ...update } : project,
       ),
     );
@@ -103,4 +155,3 @@ export function useProject(): ProjectContextType {
   return context;
 }
 
-// i forgot how to add a new data into an array hence why i wrote the spread ... project that way how about now?

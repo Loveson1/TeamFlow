@@ -53,8 +53,9 @@ export default function Sidebar() {
   const expand = isExpanded ? "w-full" : "w-max";
 
   return (
+    <aside className="sticky top-0 h-screen">
     <div
-      className={`min-h-screen flex flex-col card transition-all duration-200 ${isExpanded ? "w-64 " : "w-16"}`}
+      className={`min-h-screen  flex flex-col card transition-all duration-200 ${isExpanded ? "w-64 " : "w-16"}`}
     >
       <div className="flex  items-center justify-between  ">
         {isExpanded && (
@@ -94,7 +95,7 @@ export default function Sidebar() {
 
         <button className={`flex-center group ${expand} `}>
           <LuSearch className="size-5 group-hover:text-accent" />
-          {isExpanded && <p className="">Search</p>}
+          {isExpanded && <p className="phover">Search</p>}
         </button>
 
 
@@ -102,7 +103,7 @@ export default function Sidebar() {
         <button className={`flex-center justify-between group h-9 ${expand}`}>
           <div className="flex-center ">
             <LuFolder className="size-5 group-hover:text-accent" />
-            {isExpanded && <p>Projects</p>}
+            {isExpanded && <p className="phover">Projects</p>}
           </div>
           {isExpanded && (
             <div
@@ -121,8 +122,8 @@ export default function Sidebar() {
         {showProjectsList && isExpanded && (
           <div>
             {projects.map((project) => (
-              <button className="flex w-full" key={project.id}>
-                <p># {project.name}</p>
+              <button className="flex w-full group" key={project.id}>
+                <p className="phover"># {project.name}</p>
               </button>
             ))}
           </div>
@@ -131,7 +132,7 @@ export default function Sidebar() {
         {user?.role === "ADMIN" && (
           <button className={`flex-center group ${expand}`}>
             <LuSettings className="size-5 group-hover:text-accent" />
-            {isExpanded && <p>System settings</p>}
+            {isExpanded && <p className="phover">System settings</p>}
           </button>
         )}
       </nav>
@@ -142,10 +143,11 @@ export default function Sidebar() {
           className={`flex-center hover:bg-red-900 group ${isExpanded ? "w-full" : ""}`}
         >
           <LuLogOut className="size-5 group-hover:text-accent" />
-          {isExpanded && <p>logout</p>}
+          {isExpanded && <p className="phover">logout</p>}
         </button>
       </div>
     </div>
+    </aside>
   );
 }
 

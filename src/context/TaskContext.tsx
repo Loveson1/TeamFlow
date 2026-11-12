@@ -53,11 +53,11 @@ export default function TaskProvider({ children }: TaskProps) {
     projectId: string,
     assignedTo: string,
   ) => {
-    setTasks([
-      ...tasks,
+    setTasks((prev) => [
+      ...prev,
 
       {
-        id: `task_${Math.random() * 1000}`,
+        id: `task_${crypto.randomUUID()}`,
         name: name,
         description: description,
         projectId: projectId,
@@ -71,8 +71,8 @@ export default function TaskProvider({ children }: TaskProps) {
     id: string,
     updates: {name?: string; description?: string ; status?: Task["status"],}
   ) => {
-    setTasks(
-      tasks.map((item) =>
+    setTasks((prev) =>
+      prev.map((item) =>
         item.id == id ? { ...item, ...updates } : item,
       ),
     );

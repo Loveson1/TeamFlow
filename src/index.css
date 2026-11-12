@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-accent2: #e2dfe5;
   --color-accent: #e4e4e7;
   --color-text: #e4e4e7;
   --color-secondaryText: #a1a1aa;
@@ -11,6 +12,7 @@
 }
 
 .light {
+  --color-accent2: #18181b;
   --color-accent: #e2dfe5;
   --color-text: #18181b;
   --color-secondary-text: #71717a;
@@ -24,8 +26,11 @@
   }
 
   p {
-    @apply text-text group-hover:text-accent text-sm;
+    @apply text-text  text-sm;
   }
+
+  .phover{
+    @apply group-hover:text-accent}
 
   h1{
     @apply font-bold text-2xl
@@ -46,10 +51,10 @@
 
 @layer utilities {
   button {
-    @apply px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200;
+    @apply text-[14px] px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200 cursor-pointer;
   }
   .button2 {
-    @apply bg-purple px-4 py-2  hover:bg-purple-950 hover:text-accent text-gray-200 rounded transition-all duration-200;
+    @apply bg-purple px-4 py-2  hover:bg-purple-950 hover:text-accent text-gray-200 rounded transition-all duration-200 cursor-pointer;
   }
   .flex-center {
     @apply flex  items-center gap-x-2;
