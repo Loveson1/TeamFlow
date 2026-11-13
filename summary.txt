@@ -13,9 +13,9 @@ AND STEADILY INCREASING THE CHALLENGE A BIT
 
 _______________________________________________
 
-Today task
+Today's task
 
-1. I rebuild taskContext building on my own in 15 mins
+1. 
 2. Build screens 2hr
 3. Write summary 20mins
 

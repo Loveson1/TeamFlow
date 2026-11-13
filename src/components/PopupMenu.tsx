@@ -4,7 +4,7 @@
 // useref to trigger focus on it
 // interface for the data shape and structure
 
-import { useState, useRef, type ReactNode, Children } from "react";
+import { useState, useRef, type ReactNode } from "react";
 import { LuEllipsis } from "react-icons/lu";
 
 interface MenuType {

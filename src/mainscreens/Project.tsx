@@ -45,8 +45,10 @@ import PopupMenu from "../components/PopupMenu";
 import { useAuth } from "../context/AuthContext";
 
 export default function Project() {
+  // Global state
   const { projects, createProject, updateProject } = useProject();
   const {user} = useAuth()
+  //local state
   const [searchQuery, setSearchQuery] = useState("");
   const [limit, setLimit] = useState(6);
 
@@ -62,7 +64,7 @@ export default function Project() {
     <>
       <h1>Project</h1>
 
-      <div className="my-10 flex-center gap-x-10!">
+     <div className="my-10 flex-center gap-x-10!">
         <input
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -70,13 +72,13 @@ export default function Project() {
           className="border-secondaryText border rounded p-1.75 w-full"
           placeholder="Search Projects"
         />
-        <button className=" flex-center text-nowrap button2 ">
+    {user?.role === "ADMIN" &&    <button className=" flex-center text-nowrap button2 ">
           <LuPlus />
           Create Project{" "}
-        </button>
+        </button>}
       </div>
 
-      <p className="font-bold mb-2">{filteredProjects.length} Projects</p>
+      <p className="font-bold mb-2">{filteredProjects.length <= 1 ? "Project" : "Projects" } </p>
       <hr className="mb-5 opacity-30" />
 
       {filteredProjects.length > 0 ? (
@@ -91,14 +93,16 @@ export default function Project() {
             >
               <div className="flex justify-between gap-5">
                 <h2 className="mb-2">{project.name} </h2>
-                <PopupMenu>
+             {user?.role === "ADMIN" &&    <PopupMenu>
                   <button className="w-full text-left">View</button>
                   <button className="w-full text-left">Edit</button>
+                  <button className="w-full text-left">Assign</button>
+
                   <hr className="my-1 opacity-30" />
                   <button className="w-full text-left hover:bg-red-800">
                     Delete
                   </button>
-                </PopupMenu>
+                </PopupMenu>}
               </div>
 
               <p>{project.description} </p>
@@ -107,13 +111,13 @@ export default function Project() {
         </div>
       ) : (
         <div className="card rounded-xl px-5! ">
-          <h2 className="mb-2"> No Project Yet</h2>
+         {user?.role === "ADMIN" ?  <h2 className="mb-2"> No Project Yet</h2>: <p className="mb-2"> You've not been assigned any project yet!</p>}
 
-          <div>
-            <button className="flex-center px-4 m-auto">
+          {user?.role === "ADMIN" &&   <div>
+          <button className="flex-center px-4 m-auto">
               <LuPlus /> Add New Project
             </button>
-          </div>
+          </div> }
         </div>
       )}
       {filteredProjects.length > limit && (

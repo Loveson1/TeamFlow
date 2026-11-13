@@ -81,31 +81,6 @@ export default function ProjectProvider({ children }: ProjectProps) {
     },
    
     {
-      id: "proj_0605",
-      name: "Marketing Campaign",
-      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
-      assignedTo: ["usr_worker_4"],
-    },
-     {
-      id: "proj_0420",
-      name: "Website Project",
-      description: "A mini website project for a cook house in Abidjan",
-      assignedTo: ["usr_worker_2"],
-    },
-   
-    {
-      id: "proj_0651",
-      name: "Marketing Campaign",
-      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
-      assignedTo: ["usr_worker_4"],
-    }, {
-      id: "proj_1401",
-      name: "Website Project",
-      description: "A mini website project for a cook house in Abidjan",
-      assignedTo: ["usr_worker_2"],
-    },
-   
-    {
       id: "proj_0615",
       name: "Marketing Campaign",
       description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
