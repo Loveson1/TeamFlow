@@ -4,7 +4,7 @@ interface Project {
   name: string;
   id: string;
   description: string;
-  assignedTo: string[];
+  assignedTo?: string[];
 }
 
 interface ProjectContextType {
@@ -12,12 +12,13 @@ interface ProjectContextType {
   createProject: (
     name: string,
     description: string,
-    assignedTo: string[],
+    assignedTo?: string[],
   ) => void;
   updateProject: (
     id: string,
     update: { name?: string; description?: string; assignedTo?: string[] },
   ) => void;
+  deleteProject: (id: string) => void;
 }
 
 interface ProjectProps {
@@ -37,14 +38,16 @@ export default function ProjectProvider({ children }: ProjectProps) {
     {
       id: "proj_0002",
       name: "Brand Make Over",
-      description: "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
+      description:
+        "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
       assignedTo: ["usr_worker_3"],
     },
 
     {
       id: "proj_0003",
       name: "Marketing Campaign",
-      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      description:
+        "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
       assignedTo: ["usr_worker_4"],
     },
     {
@@ -53,24 +56,27 @@ export default function ProjectProvider({ children }: ProjectProps) {
       description: "A mini website project for a cook house in Abidjan",
       assignedTo: ["usr_worker_2"],
     },
-   
+
     {
       id: "proj_0005",
       name: "Marketing Campaign",
-      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      description:
+        "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
       assignedTo: ["usr_worker_4"],
     },
-     {
+    {
       id: "proj_1002",
       name: "Brand Make Over",
-      description: "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
+      description:
+        "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
       assignedTo: ["usr_worker_3"],
     },
 
     {
       id: "proj_0303",
       name: "Marketing Campaign",
-      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      description:
+        "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
       assignedTo: ["usr_worker_4"],
     },
     {
@@ -79,11 +85,12 @@ export default function ProjectProvider({ children }: ProjectProps) {
       description: "A mini website project for a cook house in Abidjan",
       assignedTo: ["usr_worker_2"],
     },
-   
+
     {
       id: "proj_0615",
       name: "Marketing Campaign",
-      description: "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
+      description:
+        "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
       assignedTo: ["usr_worker_4"],
     },
   ]);
@@ -91,32 +98,34 @@ export default function ProjectProvider({ children }: ProjectProps) {
   const createProject = (
     name: string,
     description: string,
-    assignedTo: string[],
+    assignedTo?: string[],
   ) => {
-    setProjects((prev) => ([
-      ...prev,
+    setProjects((prev) => [
       {
         id: `proj_${crypto.randomUUID()}`,
         name: name,
         description: description,
         assignedTo: assignedTo,
       },
-    ]));
+      ...prev,
+    ]);
   };
 
-  const updateProject = (
-    id: string,
-    update: { name?: string; description?: string; assignedTo?: string[] },
-  ) => {
-    setProjects(
-      (prev) =>
+  const updateProject = (id: string, update: Partial<Omit<Project, "id">>) => {
+    setProjects((prev) =>
       prev.map((project) =>
         project.id === id ? { ...project, ...update } : project,
       ),
     );
   };
+
+  const deleteProject = (id: string) => {
+   setProjects((prev) => prev.filter((project) => project.id !== id))
+  };
   return (
-    <ProjectContext.Provider value={{ projects, createProject, updateProject }}>
+    <ProjectContext.Provider
+      value={{ projects, createProject, updateProject, deleteProject }}
+    >
       {children}
     </ProjectContext.Provider>
   );
@@ -129,4 +138,3 @@ export function useProject(): ProjectContextType {
   }
   return context;
 }
-

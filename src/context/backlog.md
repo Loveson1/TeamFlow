@@ -1,0 +1,17 @@
+project
+Pass 2
+
+Add a custom message, z.string().min(1, "Name is required"), because zod’s default message is unfriendly.
+Replace the hardcoded “Adeola Omomowo” assignee with the real assignee picker, and decide what assignedTo should be. Your schema allows a string or an array, but your context expects string[], so I’d make the schema z.array(z.string()) and default it to [].
+Clear and focus the Name field when the modal opens (autoFocus on the name input is a quick option).
+
+Pass 3
+
+Add role="dialog", aria-modal="true", and aria-labelledby pointing at the title.
+Close on Escape, trap focus inside the modal, and return focus to the Create Project button when it closes.
+Give the X button aria-label="Close".
+
+delete
+
+Pass 2: confirm before deleting (a small “Are you sure?” modal), and an error boundary so a render error shows a message instead of a blank page.
+Pass 3: after a delete, move focus somewhere sensible, like the next card or the search box.

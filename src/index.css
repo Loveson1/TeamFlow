@@ -25,10 +25,17 @@
     @apply font-sans bg-background text-text;
   }
 
-  p {
+  p, label  {
     @apply text-text  text-sm;
   }
 
+  input::placeholder{
+    @apply text-sm
+  }
+
+   textarea::placeholder{
+    @apply text-sm
+  }
   .phover{
     @apply group-hover:text-accent}
 
@@ -51,11 +58,16 @@
 
 @layer utilities {
   button {
-    @apply text-[14px] px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200 cursor-pointer;
+    @apply text-[14px] px-2 py-2 hover:bg-purple-950 hover:text-accent rounded transition-all duration-200 cursor-pointer disabled:cursor-not-allowed;
   }
   .button2 {
     @apply bg-purple px-4 py-2  hover:bg-purple-950 hover:text-accent text-gray-200 rounded transition-all duration-200 cursor-pointer;
   }
+
+   .button3 {
+    @apply hover:bg-[#313131] px-4 py-2  bg-[#4a4a4a] hover:text-accent text-gray-200 rounded transition-all duration-200 cursor-pointer;
+  }
+
   .flex-center {
     @apply flex  items-center gap-x-2;
   }

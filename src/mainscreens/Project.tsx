@@ -42,15 +42,20 @@ import React, { useState } from "react";
 import { LuPlus } from "react-icons/lu";
 import { useProject } from "../context/ProjectContext";
 import PopupMenu from "../components/PopupMenu";
+import AddForm from "../components/FormModal";
 import { useAuth } from "../context/AuthContext";
+import ProjectForm from "../components/ProjectForm";
 
 export default function Project() {
   // Global state
-  const { projects, createProject, updateProject } = useProject();
+  const { projects, deleteProject, createProject, updateProject  } = useProject();
   const {user} = useAuth()
   //local state
   const [searchQuery, setSearchQuery] = useState("");
   const [limit, setLimit] = useState(6);
+  const [open, setOpen] = useState<boolean>(false);
+
+
 
   const filteredProjects = projects.filter((project) => {
     const query = searchQuery.toLowerCase().trim();
@@ -60,6 +65,9 @@ export default function Project() {
     );
   });
 
+  const focusOnMount = (el: HTMLElement | null) => el?.focus();
+  const PAGE_SIZE = 6;
+
   return (
     <>
       <h1>Project</h1>
@@ -67,18 +75,27 @@ export default function Project() {
      <div className="my-10 flex-center gap-x-10!">
         <input
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => {setSearchQuery(e.target.value), setLimit(PAGE_SIZE)}}
           type="search"
           className="border-secondaryText border rounded p-1.75 w-full"
           placeholder="Search Projects"
         />
-    {user?.role === "ADMIN" &&    <button className=" flex-center text-nowrap button2 ">
+    {user?.role === "ADMIN" ||    <button onClick={()=> setOpen(prev => (!prev))} className=" flex-center text-nowrap button2 ">
           <LuPlus />
           Create Project{" "}
         </button>}
+
+      {open &&
+      
+      <ProjectForm
+        title="Add"
+        onClose={()=>setOpen(false)}
+        onSubmit={(data)=> createProject(data.name, data.description)}
+        
+        />}
       </div>
 
-      <p className="font-bold mb-2">{filteredProjects.length <= 1 ? "Project" : "Projects" } </p>
+      <p className="font-bold mb-2">{filteredProjects.length} {filteredProjects.length === 1 ? "Project" : "Projects" } </p>
       <hr className="mb-5 opacity-30" />
 
       {filteredProjects.length > 0 ? (
@@ -87,19 +104,28 @@ export default function Project() {
             <div
               key={project.id}
               tabIndex={-1}
-              ref={limit > 6 && index === limit - 6 ?(el)=> el?.focus() : null}
+              ref={limit > PAGE_SIZE && index === limit - PAGE_SIZE  ? focusOnMount : null}
               className="card hover:border-accent2/20 hover:border  rounded-xl px-5! cursor-pointer group "
               onClick={() => useProject}
             >
               <div className="flex justify-between gap-5">
                 <h2 className="mb-2">{project.name} </h2>
-             {user?.role === "ADMIN" &&    <PopupMenu>
+             {user?.role === "ADMIN" || <PopupMenu>
                   <button className="w-full text-left">View</button>
-                  <button className="w-full text-left">Edit</button>
+                  <button onClick={()=>setOpen(prev=>(!prev))} className="w-full text-left">Edit</button>
+
+                   {open &&
+      
+      <ProjectForm
+        title="Edit"
+        onClose={()=>setOpen(prev=>(!prev))}
+        onSubmit={(data)=> updateProject(data.id, data)}
+        
+        />}
                   <button className="w-full text-left">Assign</button>
 
                   <hr className="my-1 opacity-30" />
-                  <button className="w-full text-left hover:bg-red-800">
+                  <button onClick={()=>deleteProject(project.id)} className="w-full text-left hover:bg-red-800">
                     Delete
                   </button>
                 </PopupMenu>}
@@ -123,8 +149,7 @@ export default function Project() {
       {filteredProjects.length > limit && (
         <button
           className="mt-5 button2"
-          onClick={() => setLimit(prev => prev + 6)}
-        >
+          onClick={() => setLimit(prev => prev + 6)}>
           Load More
         </button>
       )}

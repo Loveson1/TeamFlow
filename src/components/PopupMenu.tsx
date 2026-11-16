@@ -43,8 +43,7 @@ export default function PopupMenu({ label = "options", children }: MenuType) {
         <>
           <div
             className="fixed inset-0 z-10 cursor-auto"
-            onClick={() => setOpen(false)}
-          />
+            onClick={() => setOpen(false)}/>
 
           <div
             onClick={() => setOpen(false)}
