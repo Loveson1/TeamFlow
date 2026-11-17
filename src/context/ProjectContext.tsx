@@ -33,14 +33,14 @@ export default function ProjectProvider({ children }: ProjectProps) {
       id: "proj_0010",
       name: "Website Project",
       description: "A mini website project for a cook house in Abidjan",
-      assignedTo: ["usr_worker_2"],
+      assignedTo: ["usr_admin_1"],
     },
     {
       id: "proj_0002",
       name: "Brand Make Over",
       description:
         "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
-      assignedTo: ["usr_worker_3"],
+      assignedTo: ["usr_worker_5"],
     },
 
     {
@@ -62,7 +62,7 @@ export default function ProjectProvider({ children }: ProjectProps) {
       name: "Marketing Campaign",
       description:
         "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
-      assignedTo: ["usr_worker_4"],
+      assignedTo: ["usr_worker_5"],
     },
     {
       id: "proj_1002",

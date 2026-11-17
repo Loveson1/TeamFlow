@@ -8,7 +8,7 @@ import { LuPlus } from "react-icons/lu";
 const ProjectSchema = z.object({
   name: z.string().min(1).max(120),
   description: z.string().max(15000),
-  assignedTo: z.union([z.string(), z.array(z.string())]).optional(),
+  assignedTo: z.union([z.array(z.string())]).optional(),
 });
 
 type ProjectFields = z.infer<typeof ProjectSchema>;

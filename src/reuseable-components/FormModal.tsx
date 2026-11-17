@@ -32,7 +32,7 @@ export default function FormModal({ children, onClose, title, onSubmit, isSubmit
           className="card p-4! w-1/3 z-20 rounded-xl absolute "
         >
           <div className="flex-center justify-between ">
-            <p className="font-bold">Add</p>
+            <p className="font-bold">{title}</p>
             <button type="button" onClick={onClose}>
               <LuX className="size-5" />
             </button>

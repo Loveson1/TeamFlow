@@ -35,9 +35,9 @@ export default function PopupMenu({ label = "options", children }: MenuType) {
             setDropUp(window.innerHeight - e.clientY < 200)
             setOpen((prev) => !prev)}}
         type="button"
-        className={`group-hover:opacity-100 ${open ? "opacity-100" :" opacity-0"}`}
+        className={`group-hover:opacity-100 ${open ? "opacity-100" :" opacity-0"} hover:bg-[#313131]!  py-[0.5px]! px-2!`}
       >
-        <LuEllipsis />
+        <LuEllipsis className="size-5"/>
       </button>
       {open && (
         <>

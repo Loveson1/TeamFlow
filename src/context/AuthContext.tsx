@@ -1,13 +1,9 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { mockUsers } from "./mockUsers";
 
 // define the data type structure
 
-interface User {
+export interface User {
   name: string;
   id: string;
   email: string;
@@ -29,13 +25,11 @@ interface AuthProviderProps {
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
+  // used mockdata here to ensure we have one source of truth for users
+
   const login = (selectedRole: "ADMIN" | "WORKER") => {
-    setUser({
-      name: selectedRole === "ADMIN" ? "Ade(Admin)" : "Ola(Worker)",
-      id: selectedRole === "ADMIN" ? "usr_admin_1" : "usr_worker_2",
-      email: `${selectedRole.toLowerCase()}@taskflow.com`,
-      role: selectedRole,
-    });
+    const found = mockUsers.find((u) => u.role === selectedRole);
+    setUser(found ?? null);
   };
 
   const logout = () => {
@@ -50,10 +44,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export const useAuth = (): AuthContextType => {
-
-    const context = useContext(AuthContext)
-    if(!context){
-       throw new Error(" Use Context in right component")
-    } return context
-
-}
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error(" Use Context in right component");
+  }
+  return context;
+};

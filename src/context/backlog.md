@@ -15,3 +15,8 @@ delete
 
 Pass 2: confirm before deleting (a small “Are you sure?” modal), and an error boundary so a render error shows a message instead of a blank page.
 Pass 3: after a delete, move focus somewhere sensible, like the next card or the search box.
+
+Backlog items for later: pass 2 can show “Unassigned” when assignees is empty and a “+2” circle when there are many, and pass 3 should replace title with an aria-label, since a hover tooltip doesn’t help keyboard or screen reader users.
+
+
+max lenght of text for project cards so they always have the same shape and dot grow bigger tha others
