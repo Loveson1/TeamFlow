@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { useParams } from "react-router-dom";
+import { id } from "zod/v4/locales";
 
 // create the type for the task data structure and taskcontext
 
@@ -27,7 +28,7 @@ interface TaskContexType {
     updates: {name?: string; description?: string ; status?: Task["status"],}
   ) => void;
 
-  // deleteTask: (id: string)
+  deleteTask: (id: string) => void
 }
 
 interface TaskProps {
@@ -85,8 +86,13 @@ export default function TaskProvider({ children }: TaskProps) {
     );
   };
 
+  const deleteTask = (id: string) => {
+   setTasks((prev)=>  prev.filter(task=> task.id !== id))
+   
+  }
+
   return (
-    <TaskContext.Provider value={{ tasks, createTask, updateTask }}>
+    <TaskContext.Provider value={{ tasks, createTask, updateTask, deleteTask }}>
       {children}
     </TaskContext.Provider>
   );

@@ -19,8 +19,8 @@ export default function Project() {
   const [searchQuery, setSearchQuery] = useState(""); // for filter
   const [limit, setLimit] = useState(6); // for project project card numbers
   const [open, setOpen] = useState<boolean>(false); // for create project form modal
-  const [editingId, setEditingId] = useState<string | null>(); // for editing modal
-  const [deletingId, setDeletingId] = useState<string | null>(); // for delete modal
+  const [editingId, setEditingId] = useState<string | null>(null); // for editing modal
+  const [deletingId, setDeletingId] = useState<string | null>(null); // for delete modal
 
   const deletingProject = projects.find((p) => p.id === deletingId); // variable holds project matching active selected project
   const editingProject = projects.find((p) => p.id === editingId);

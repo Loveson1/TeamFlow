@@ -40,23 +40,31 @@ import PopupMenu from "@/reuseable-components/PopupMenu";
 import { useState } from "react";
 import { LuPlus } from "react-icons/lu";
 import TaskForm from "@/reuseable-components/TaskForm";
+import ConfirmModal from "@/reuseable-components/Confirmation";
 
 export default function ProjectTasks() {
-  const [open, setOpen] = useState<boolean>(false); // for create task form modal
-  const [limit, setLimit] = useState(6); // for project project card numbers
+  // global state
   const { user } = useAuth();
-  const { tasks, createTask, deleteTask } = useTask();
+  const { tasks, createTask, deleteTask, updateTask } = useTask();
   const { projects } = useProject();
 
-  const { projectId }= useParams();
+  const [open, setOpen] = useState<boolean>(false); // for create task form modal
+  const [limit, setLimit] = useState(6); // for project project card numbers
 
-  const project = projects.find((project) => project.id === projectId);
-  
-  const projectTasks = tasks.filter((task) => task.projectId === projectId);
+  const { projectId } = useParams(); // this is use to get the loaded page projectId, which is what is used to navigate to this page so it more like a inhouse useContext portal hook
 
+  const project = projects.find((project) => project.id === projectId); // this is here to get project details and to verify that a project task exist for error state
+
+  const projectTasks = tasks.filter((task) => task.projectId === projectId); // this filters through task and only shows task under a projectid
+
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const deletingTask = projectTasks.find((task) => task.id === deletingId);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const editingTask = projectTasks.find((task) => task.id === editingId);
 
   if (!project) {
-    return <p>Project not found.</p>;}
+    return <p>Project not found.</p>;
+  }
 
   return (
     <>
@@ -99,13 +107,16 @@ export default function ProjectTasks() {
                   {user?.role === "ADMIN" || (
                     <PopupMenu>
                       <button className="w-full text-left">View</button>
-                      <button className="w-full text-left">Edit</button>
-<button>Status</button>
+                      <button onClick={()=>setEditingId(task.id)} className="w-full text-left">Edit</button>
+                      <button className="w-full text-left">Status</button>
                       <hr className="my-1 opacity-30" />
-                      <button onClick={()=> } className="w-full text-left hover:bg-red-800">
+
+                      <button
+                        onClick={() => setDeletingId(task.id)}
+                        className="w-full text-left hover:bg-red-800"
+                      >
                         Delete
                       </button>
-                      
                     </PopupMenu>
                   )}
                 </div>
@@ -167,6 +178,30 @@ export default function ProjectTasks() {
           }
           onClose={() => setOpen(false)}
         />
+      )}
+
+      {deletingTask && (
+        <ConfirmModal
+          onConfirm={() => {
+            deleteTask(deletingTask.id);
+            setDeletingId(null);
+          }}
+          onCancel={() => setDeletingId(null)}
+          Message={`Are you sure you want to delete ${deletingTask.name}`}
+        />
+      )}
+
+      {editingTask && (
+          <TaskForm
+          title="Edit Task"
+          defaultValues={{name: editingTask.name, description:editingTask.description }}
+          onSubmit={(data) => {
+            updateTask(editingTask.id, data);
+            setEditingId (null);}
+          }
+          onClose={() => setEditingId(null)}
+        />
+
       )}
     </>
   );
