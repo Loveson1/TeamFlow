@@ -41,6 +41,7 @@ import {
   LuChevronRight,
   LuChevronDown,
 } from "react-icons/lu";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
@@ -100,6 +101,7 @@ export default function Sidebar() {
 
 
        {/* PROJECT LIST DROPDOWN ENGINE */}
+       <Link to={"/project"}>
         <button className={`flex-center justify-between group h-9 ${expand}`}>
           <div className="flex-center ">
             <LuFolder className="size-5 group-hover:text-accent" />
@@ -117,7 +119,7 @@ export default function Sidebar() {
               )}
             </div>
           )}
-        </button>
+        </button></Link>
 
         {showProjectsList && isExpanded && (
           <div>

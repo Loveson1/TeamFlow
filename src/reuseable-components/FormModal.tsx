@@ -1,7 +1,5 @@
 import { type ReactNode, type SubmitEventHandler } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { LuX, LuPlus } from "react-icons/lu";
-import { useProject } from "../context/ProjectContext";
+import { LuX, } from "react-icons/lu";
 
 
 
@@ -37,10 +35,10 @@ export default function FormModal({ children, onClose, title, onSubmit, isSubmit
               <LuX className="size-5" />
             </button>
           </div>
-          <hr className="my-4 opacity-30" />
+          <hr className="" />
 
           <form
-            className="flex flex-col my-2"
+            className="flex flex-col mt-6"
             onSubmit={onSubmit}
           >
             

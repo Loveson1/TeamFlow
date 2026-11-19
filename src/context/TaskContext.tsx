@@ -1,13 +1,16 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import { useParams } from "react-router-dom";
 
 // create the type for the task data structure and taskcontext
+
+
 
 interface Task {
   id: string;
   name: string;
   description: string;
-  projectId: string;
-  assignedTo: string;
+  projectId?: string;
+  assignedTo?: string;
   status: "Todo" | "In-progress" | "Completed";
 }
 
@@ -16,8 +19,7 @@ interface TaskContexType {
   createTask: (
     name: string,
     description: string,
-    projectId: string,
-    assignedTo: string,
+    assignedTo?: string,
   ) => void;
   updateTask: (
     id: string,
@@ -34,6 +36,9 @@ interface TaskProps {
 const TaskContext = createContext<TaskContexType | undefined>(undefined);
 
 export default function TaskProvider({ children }: TaskProps) {
+
+const {projectId} = useParams()
+
   //create mockup data
   const [tasks, setTasks] = useState<Task[]>([
     {
@@ -49,12 +54,10 @@ export default function TaskProvider({ children }: TaskProps) {
 
   const createTask = (
     name: string,
-    description: string,
-    projectId: string,
-    assignedTo: string,
+    description: string, 
+    assignedTo?: string,
   ) => {
     setTasks((prev) => [
-      ...prev,
 
       {
         id: `task_${crypto.randomUUID()}`,
@@ -64,6 +67,7 @@ export default function TaskProvider({ children }: TaskProps) {
         assignedTo: assignedTo,
         status: "Todo",
       },
+       ...prev
     ]);
   };
 

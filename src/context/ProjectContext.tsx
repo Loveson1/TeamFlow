@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-interface Project {
+export interface Project {
   name: string;
   id: string;
   description: string;

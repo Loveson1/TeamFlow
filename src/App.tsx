@@ -1,31 +1,19 @@
 import "./App.css";
 
-import Sidebar from "./components/Sidebar";
-import AuthProvider from "./context/AuthContext";
-import ProjectProvider from "./context/ProjectContext";
-import TaskProvider from "./context/TaskContext";
-import Project from "./mainscreens/Project.tsx";
+import Sidebar from "./reuseable-components/Sidebar.tsx";
+import { Outlet } from "react-router-dom";
 
-import ThemeProvider from './context/ThemeContext.tsx'
 function App() {
   return (
- <ThemeProvider>
-    <AuthProvider>
-      <ProjectProvider>
-        <TaskProvider> 
-          <div className="flex min-h-screen bg-background text-text ">
-              
-              <Sidebar  />
+  
+            <div className="flex min-h-screen bg-background text-text ">
+              <Sidebar />
 
-             <main className="flex-1 p-6 ">
-                <Project />
+              <main className="flex-1 p-6 ">
+                <Outlet/>
               </main>
-
             </div>
-        </TaskProvider>
-      </ProjectProvider>
-    </AuthProvider>
-    </ThemeProvider>
+         
   );
 }
 

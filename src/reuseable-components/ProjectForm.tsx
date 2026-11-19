@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormModal from "./FormModal";
 import { LuPlus } from "react-icons/lu";
 
+
 const ProjectSchema = z.object({
   name: z.string().min(1).max(120),
   description: z.string().max(15000),
@@ -20,12 +21,18 @@ interface ProjectFormProps {
   onClose: () => void;
 }
 
+
+
+
 export default function ProjectForm({
   title,
   defaultValues,
   onSubmit,
   onClose,
 }: ProjectFormProps) {
+
+
+  
   const {
     register,
     handleSubmit,
@@ -42,6 +49,7 @@ export default function ProjectForm({
       onSubmit={handleSubmit((data) => {
         onSubmit(data);
         onClose();
+        
       })}
     >
       <label htmlFor="name" className="mb-1">

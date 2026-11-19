@@ -1,3 +1,58 @@
+/* For the prject screen
+what context is needed here, 
+- project context 
+- auth context
+
+what local data 
+
+empty project state, 
+
+loading project state ,
+
+add project state modal for adding project
+
+load more state
+
+search project, 
+
+project card options, 
+
+Architecture
+
+project heading
+search and add bar
+numbers of project with an horizontal line
+project cards 
+project cards contains option 
+options includes view , edit, assign and delete
+the view goes to the project where the tasks are
+edit goes to form to edit project
+asign assign either you or the unassign people or assign multiple people
+
+
+what would worker see
+
+no project assigned to you
+he would see assigned project and can only view 
+he wont see create project anywhere
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Final wrap up for today
 
 So today basically i built

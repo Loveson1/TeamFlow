@@ -1,61 +1,31 @@
-/* For the prject screen
-what context is needed here, 
-- project context 
-- auth context
-
-what local data 
-
-empty project state, 
-
-loading project state ,
-
-add project state modal for adding project
-
-load more state
-
-search project, 
-
-project card options, 
-
-Architecture
-
-project heading
-search and add bar
-numbers of project with an horizontal line
-project cards 
-project cards contains option 
-options includes view , edit, assign and delete
-the view goes to the project where the tasks are
-edit goes to form to edit project
-asign assign either you or the unassign people or assign multiple people
-
-
-what would worker see
-
-no project assigned to you
-he would see assigned project and can only view 
-he wont see create project anywhere
-
-*/
-
 import React, { useState } from "react";
 import { LuPlus } from "react-icons/lu";
 import { useProject } from "../context/ProjectContext";
-import PopupMenu from "@/reuseable-components/PopupMenu";
+import PopupMenu from "../reuseable-components/PopupMenu";
 import { useAuth } from "../context/AuthContext";
-import ProjectForm from "@/reuseable-components/ProjectForm";
+import ProjectForm from "../reuseable-components/ProjectForm";
 import { mockUsers } from "../context/mockUsers";
+import ComboBox from "../reuseable-components/ComboBox";
+import ConfirmModal from "@/reuseable-components/Confirmation";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Project() {
   // Global state
   const { projects, deleteProject, createProject, updateProject } =
     useProject();
   const { user } = useAuth();
-  //local state
-  const [searchQuery, setSearchQuery] = useState("");
-  const [limit, setLimit] = useState(6);
-  const [open, setOpen] = useState<boolean>(false);
 
+  //local states for managing different states
+  const [searchQuery, setSearchQuery] = useState(""); // for filter
+  const [limit, setLimit] = useState(6); // for project project card numbers
+  const [open, setOpen] = useState<boolean>(false); // for create project form modal
+  const [editingId, setEditingId] = useState<string | null>(); // for editing modal
+  const [deletingId, setDeletingId] = useState<string | null>(); // for delete modal
+
+  const deletingProject = projects.find((p) => p.id === deletingId); // variable holds project matching active selected project
+  const editingProject = projects.find((p) => p.id === editingId);
+
+  // filter that returns searched projects
   const filteredProjects = projects.filter((project) => {
     const query = searchQuery.toLowerCase().trim();
     return (
@@ -64,24 +34,16 @@ export default function Project() {
     );
   });
 
-  const focusOnMount = (el: HTMLElement | null) => el?.focus();
-  const PAGE_SIZE = 6;
-
-  const [editingId, setEditingId] = useState<string | null>();
-  const [deleteId, setDeleteId] = useState<string | null>();
-  const deletingProject = projects.find((p) => p.id === deleteId);
-
-  const editingProject = projects.find((p) => p.id === editingId);
+  const navigate = useNavigate()
 
   return (
     <>
       <h1>Project</h1>
-
       <div className="my-10 flex-center gap-x-10!">
         <input
           value={searchQuery}
           onChange={(e) => {
-            (setSearchQuery(e.target.value), setLimit(PAGE_SIZE));
+            setSearchQuery(e.target.value);
           }}
           type="search"
           className="border-secondaryText border rounded p-1.75 w-full"
@@ -96,44 +58,36 @@ export default function Project() {
             Create Project{" "}
           </button>
         )}
-
-        {open && (
-          <ProjectForm
-            title="Add"
-            onClose={() => setOpen(false)}
-            onSubmit={(data) => createProject(data.name, data.description)}
-          />
-        )}
       </div>
 
       <p className="font-bold mb-2">
         {filteredProjects.length}{" "}
         {filteredProjects.length === 1 ? "Project" : "Projects"}
       </p>
-      <hr className="mb-5 opacity-30" />
+      <hr className="mb-5 " />
+
+      {/* Project cards mapped with empty card state */}
 
       {filteredProjects.length > 0 ? (
         <div className="grid grid-cols-3 gap-5  ">
-          {filteredProjects.slice(0, limit).map((project, index) => {
+          {filteredProjects.slice(0, limit).map((project) => {
             const assignees = mockUsers.filter((u) =>
               project.assignedTo?.includes(u.id),
             );
             return (
               <div
                 key={project.id}
-                tabIndex={-1}
-                // ref={
-                //   limit > PAGE_SIZE && index === limit - PAGE_SIZE
-                //     ? focusOnMount
-                //     : null
-                // }
+              onClick={()=>  navigate(`/project/${project.id}`)}
                 className="card hover:border-accent2/20 hover:border flex flex-col  rounded-xl px-5! cursor-pointer group "
               >
                 <div className="flex justify-between gap-5">
                   <h2 className="mb-2">{project.name} </h2>
-                  {user?.role === "ADMIN" || (
+                   <div onClick={(e) => e.stopPropagation()}>
+                      {user?.role === "ADMIN" || (
                     <PopupMenu>
-                      <button className="w-full text-left">View</button>
+                      <Link to={`/project/${project.id}`}>
+                        <button className="w-full text-left">View</button>
+                      </Link>
                       <button
                         onClick={() => setEditingId(project.id)}
                         className="w-full text-left"
@@ -141,11 +95,9 @@ export default function Project() {
                         Edit
                       </button>
 
-                      <button className="w-full text-left">Assign</button>
-
-                      <hr className="my-1 opacity-30" />
+                      <hr className="my-1 " />
                       <button
-                        onClick={() => setDeleteId(project.id)}
+                        onClick={() => setDeletingId(project.id)}
                         className="w-full text-left hover:bg-red-800"
                       >
                         Delete
@@ -153,23 +105,21 @@ export default function Project() {
                     </PopupMenu>
                   )}
                 </div>
-
+               </div>
                 <p>{project.description} </p>
-                <div className="flex gap-1 mt-auto pt-4 ">
-                  {assignees.map((a) => (
-                    <div className="flex-center">
-                      <div
-                        key={a.id}
-                        title={a.name}
-                        className="size-6 group rounded-full bg-purple text-white text-xs  flex items-center justify-center"
-                      >
-                        {a.name.charAt(0)}
+                <div className="flex mt-auto pt-4 ">
+                  <ComboBox>
+                    {assignees.map((a) => (
+                      <div key={a.id} className="flex-center ">
+                        <div
+                          title={a.name}
+                          className="size-6 group rounded-full  bg-purple text-white text-xs  flex items-center justify-center"
+                        >
+                          {a.name.charAt(0)}
+                        </div>
                       </div>
-                      <p className="opacity-0 group-hover:opacity-90">
-                        {a.name}
-                      </p>
-                    </div>
-                  ))}
+                    ))}
+                  </ComboBox>
                 </div>
               </div>
             );
@@ -204,10 +154,19 @@ export default function Project() {
         </button>
       )}
 
+      {/* Conditonally rendered Modals */}
+      {open && (
+        <ProjectForm
+          title="Add Project"
+          onClose={() => setOpen(false)}
+          onSubmit={(data) => createProject(data.name, data.description)}
+        />
+      )}
+
       {editingProject && (
         <ProjectForm
           key={editingProject.id}
-          title="Edit"
+          title="Edit Project"
           onClose={() => setEditingId(null)}
           defaultValues={{
             name: editingProject.name,
@@ -218,26 +177,13 @@ export default function Project() {
       )}
 
       {deletingProject && (
-        <div className="bg-background/30 inset-0 fixed z-1 flex items-center justify-center ">
-          <div className="card p-4! rounded-xl">
-            <p className="my-5">
-              Are you sure you want to delete "{deletingProject.name}"?
-            </p>
-            <div className=" flex-center ">
-              <button
-                className="button2 bg-red-800! hover:bg-red-700!"
-                onClick={() => {
-                  (deleteProject(deletingProject.id), setDeleteId(null));
-                }}
-              >
-                Delete
-              </button>
-              <button onClick={() => setDeleteId(null)} className="button2">
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmModal
+          Message={`Are you sure you want to delete "${deletingProject.name}"`}
+          onConfirm={() => {
+            (deleteProject(deletingProject.id), setDeletingId(null));
+          }}
+          onCancel={() => setDeletingId(null)}
+        />
       )}
     </>
   );

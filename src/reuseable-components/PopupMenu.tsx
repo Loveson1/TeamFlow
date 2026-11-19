@@ -33,7 +33,7 @@ export default function PopupMenu({ label = "options", children }: MenuType) {
         aria-label={label}
         onClick={(e) =>{
             setDropUp(window.innerHeight - e.clientY < 200)
-            setOpen((prev) => !prev)}}
+            setOpen(true)}}
         type="button"
         className={`group-hover:opacity-100 ${open ? "opacity-100" :" opacity-0"} hover:bg-[#313131]!  py-[0.5px]! px-2!`}
       >
