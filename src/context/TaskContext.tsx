@@ -9,7 +9,7 @@ interface Task {
   id: string;
   name: string;
   description: string;
-  projectId?: string;
+  projectId: string;
   assignedTo?: string;
   status: "Todo" | "In-progress" | "Completed";
 }
@@ -19,12 +19,15 @@ interface TaskContexType {
   createTask: (
     name: string,
     description: string,
+    projectId: string,
     assignedTo?: string,
   ) => void;
   updateTask: (
     id: string,
     updates: {name?: string; description?: string ; status?: Task["status"],}
   ) => void;
+
+  // deleteTask: (id: string)
 }
 
 interface TaskProps {
@@ -37,7 +40,6 @@ const TaskContext = createContext<TaskContexType | undefined>(undefined);
 
 export default function TaskProvider({ children }: TaskProps) {
 
-const {projectId} = useParams()
 
   //create mockup data
   const [tasks, setTasks] = useState<Task[]>([
@@ -55,6 +57,7 @@ const {projectId} = useParams()
   const createTask = (
     name: string,
     description: string, 
+    projectId: string,
     assignedTo?: string,
   ) => {
     setTasks((prev) => [

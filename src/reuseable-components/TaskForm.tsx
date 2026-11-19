@@ -45,7 +45,7 @@ export default function TaskForm({
       title={title}
       onClose={onClose}
       onSubmit={handleSubmit(data => {
-        onSubmit(data), onClose(), console.log(data);
+        onSubmit(data), onClose();
       })}
     >
       <label htmlFor="name" className="mb-1">
@@ -54,7 +54,7 @@ export default function TaskForm({
       <input
         {...register("name")}
         placeholder="Add name"
-        name="name"
+        id="name"
         type="text"
         className="border-secondaryText border rounded p-1.5 "
       />
@@ -64,7 +64,7 @@ export default function TaskForm({
       </label>
       <textarea
         {...register("description")}
-        name="description"
+        id="description"
         placeholder="Add a description"
         className="border-secondaryText border rounded p-1.75 mb-2"
         rows={5}

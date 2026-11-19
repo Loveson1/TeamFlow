@@ -45,17 +45,18 @@ export default function ProjectTasks() {
   const [open, setOpen] = useState<boolean>(false); // for create task form modal
   const [limit, setLimit] = useState(6); // for project project card numbers
   const { user } = useAuth();
-  const { tasks, createTask } = useTask();
+  const { tasks, createTask, deleteTask } = useTask();
   const { projects } = useProject();
 
-  const { projectId } = useParams();
+  const { projectId }= useParams();
 
   const project = projects.find((project) => project.id === projectId);
+  
   const projectTasks = tasks.filter((task) => task.projectId === projectId);
 
+
   if (!project) {
-    return <p>Project not found.</p>;
-  }
+    return <p>Project not found.</p>;}
 
   return (
     <>
@@ -99,12 +100,12 @@ export default function ProjectTasks() {
                     <PopupMenu>
                       <button className="w-full text-left">View</button>
                       <button className="w-full text-left">Edit</button>
-
+<button>Status</button>
                       <hr className="my-1 opacity-30" />
-                      <button className="w-full text-left hover:bg-red-800">
+                      <button onClick={()=> } className="w-full text-left hover:bg-red-800">
                         Delete
                       </button>
-                      <button>Status</button>
+                      
                     </PopupMenu>
                   )}
                 </div>
@@ -161,7 +162,9 @@ export default function ProjectTasks() {
       {open && (
         <TaskForm
           title="Add Task"
-          onSubmit={(data) => createTask(data.name, data.description)}
+          onSubmit={(data) =>
+            createTask(data.name, data.description, project.id)
+          }
           onClose={() => setOpen(false)}
         />
       )}
