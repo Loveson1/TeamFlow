@@ -7,18 +7,18 @@ Task
 architecture/
 Project name and brief description
 
-add task button
+Create task button
 task cards
 task card options modal - view, edit, delete, update status, assign
 update status determine card color
-add task form
+Create task form
 
 view project - modal
 
 
 local datas
 
-add task state
+Create task state
 edit state
 delete state
 update status state
@@ -83,7 +83,7 @@ export default function ProjectTasks() {
             className=" flex-center text-nowrap button2 "
           >
             <LuPlus />
-            Add Task
+            Create Task
           </button>
         )}
       </div>
@@ -154,7 +154,7 @@ export default function ProjectTasks() {
                 onClick={() => setOpen(true)}
                 className="flex-center px-4 m-auto"
               >
-                <LuPlus /> Add New Task
+                <LuPlus /> Create New Task
               </button>
             </div>
           )}
@@ -172,7 +172,7 @@ export default function ProjectTasks() {
 
       {open && (
         <TaskForm
-          title="Add Task"
+          title="Create Task"
           onSubmit={(data) =>
             createTask(data.name, data.description, project.id)
           }

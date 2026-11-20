@@ -9,6 +9,7 @@ import ThemeProvider from "./context/ThemeContext.tsx";
 import AuthProvider from "./context/AuthContext.tsx";
 import ProjectProvider from "./context/ProjectContext.tsx";
 import TaskProvider from "./context/TaskContext.tsx";
+import SearchModal from "./reuseable-components/SearchModal.tsx";
 
 const router = createBrowserRouter([{
 
@@ -20,6 +21,8 @@ const router = createBrowserRouter([{
   {index: true , element:<Navigate to="/project" replace/> },
   { path: "project", element: <Project /> },
   { path: "project/:projectId", element: <ProjectTasks /> },
+  { path: "123", element: <SearchModal /> },
+
 ]}]);
 
 createRoot(document.getElementById("root")!).render(

@@ -27,7 +27,7 @@ export default function Project() {
 
   // filter that returns searched projects
   const filteredProjects = projects.filter((project) => {
-    const query = searchQuery.toLowerCase().trim();
+    const query = searchQuery.trim().toLowerCase();
     return (
       project.name.toLowerCase().includes(query) ||
       project.description.toLowerCase().includes(query)
@@ -139,7 +139,7 @@ export default function Project() {
                 onClick={() => setOpen(true)}
                 className="flex-center px-4 m-auto"
               >
-                <LuPlus /> Add New Project
+                <LuPlus /> Create New Project
               </button>
             </div>
           )}
@@ -157,7 +157,7 @@ export default function Project() {
       {/* Conditonally rendered Modals */}
       {open && (
         <ProjectForm
-          title="Add Project"
+          title="Create Project"
           onClose={() => setOpen(false)}
           onSubmit={(data) => createProject(data.name, data.description)}
         />

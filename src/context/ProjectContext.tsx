@@ -36,7 +36,7 @@ export default function ProjectProvider({ children }: ProjectProps) {
       assignedTo: ["usr_admin_1"],
     },
     {
-      id: "proj_0002",
+      id: "proj_0003",
       name: "Brand Make Over",
       description:
         "Teamflow is rebranding her bsuiness which means new brand items, website and guideline.",
@@ -58,7 +58,7 @@ export default function ProjectProvider({ children }: ProjectProps) {
     },
 
     {
-      id: "proj_0005",
+      id: "proj_0001",
       name: "Marketing Campaign",
       description:
         "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",

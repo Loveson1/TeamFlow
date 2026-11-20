@@ -1,9 +1,23 @@
+/*
+
+work on assign and status udate for project and task
+work on view modal of task
+work on sidebar modal and functionalities
+
+
+
+*/
+
+
+
+
+
 /* For the prject screen
-what context is needed here, 
+1 what context is needed here, 
 - project context 
 - auth context
 
-what local data 
+2 what local data 
 
 empty project state, 
 
@@ -17,7 +31,7 @@ search project,
 
 project card options, 
 
-Architecture
+3 Architecture
 
 project heading
 search and add bar
