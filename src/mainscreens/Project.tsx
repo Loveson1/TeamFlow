@@ -8,6 +8,7 @@ import { mockUsers } from "../context/mockUsers";
 import ComboBox from "../reuseable-components/ComboBox";
 import ConfirmModal from "@/reuseable-components/Confirmation";
 import { Link, useNavigate } from "react-router-dom";
+import Projectfom from "@/reuseable-components/edit-project";
 
 export default function Project() {
   // Global state
@@ -164,7 +165,7 @@ export default function Project() {
       )}
 
       {editingProject && (
-        <ProjectForm
+        <Projectfom
           key={editingProject.id}
           title="Edit Project"
           onClose={() => setEditingId(null)}

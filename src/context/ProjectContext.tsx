@@ -44,7 +44,7 @@ export default function ProjectProvider({ children }: ProjectProps) {
     },
 
     {
-      id: "proj_0003",
+      id: "proj_0001000",
       name: "Marketing Campaign",
       description:
         "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",
@@ -58,7 +58,7 @@ export default function ProjectProvider({ children }: ProjectProps) {
     },
 
     {
-      id: "proj_0001",
+      id: "proj_0006",
       name: "Marketing Campaign",
       description:
         "Teamflow need a marketig campaign for her brand that speaks to target audience in Abidjan",

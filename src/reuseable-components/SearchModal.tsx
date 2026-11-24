@@ -99,19 +99,20 @@ const createAction: PaletteItem[] = [
 export default function SearchModal() {
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
+  const hasQuery = q.length > 0
 
   const { projects } = useProject();
   const { tasks } = useTask();
   const matches = (text: string) => text.toLowerCase().includes(q);
 
   const projectItems: PaletteItem[] = projects
-    .filter((p) => matches(p.name))
+    .filter((p) => hasQuery && matches(p.name))
     .map((p) => {
       return { id: p.id, label: p.name, icon: <LuFolder /> };
     });
 
   const taskItems: PaletteItem[] = tasks
-    .filter((t) => matches(t.name))
+    .filter((t) => hasQuery && matches(t.name))
     .map((t) => {
       return {
         id: t.id,
@@ -122,10 +123,10 @@ export default function SearchModal() {
     });
 
   const sections: PaletteSection[] = [
-    { heading: "Navigation", items: navItem.filter((i) => matches(i.label)) },
+    { heading: "Navigations", items: navItem.filter((i) => matches(i.label)) },
     { heading: "Create", items: createAction.filter((i) => matches(i.label)) },
-    { heading: "Project", items: projectItems },
-    { heading: "Task", items: taskItems },
+    { heading: "Projects", items: projectItems },
+    { heading: "Tasks", items: taskItems },
   ].filter(s => s.items.length > 0)
 
   return (

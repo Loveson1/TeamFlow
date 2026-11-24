@@ -39,7 +39,7 @@ export default function ProjectForm({
     formState: { errors, isSubmitting },
   } = useForm<ProjectFields>({
     resolver: zodResolver(ProjectSchema),
-    defaultValues: { name: "", description: "", ...defaultValues },
+    defaultValues: { name: "", description: "", ...defaultValues },// i dont understand the useForm parameter
   });
 
   return (
