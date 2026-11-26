@@ -7,7 +7,7 @@ import ProjectForm from "../reuseable-components/ProjectForm";
 import { mockUsers } from "../context/mockUsers";
 import ComboBox from "../reuseable-components/ComboBox";
 import ConfirmModal from "@/reuseable-components/Confirmation";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Projectfom from "@/reuseable-components/edit-project";
 
 export default function Project() {
@@ -50,7 +50,7 @@ export default function Project() {
           className="border-secondaryText border rounded p-1.75 w-full"
           placeholder="Search Projects"
         />
-        {user?.role === "ADMIN" || (
+        {user?.role === "ADMIN" && (
           <button
             onClick={() => setOpen(true)}
             className=" flex-center text-nowrap button2 "
@@ -78,17 +78,16 @@ export default function Project() {
             return (
               <div
                 key={project.id}
-              onClick={()=>  navigate(`/project/${project.id}`)}
+                onClick={()=>  navigate(`/project/${project.id}`)}
                 className="card hover:border-accent2/20 hover:border flex flex-col  rounded-xl px-5! cursor-pointer group "
               >
                 <div className="flex justify-between gap-5">
                   <h2 className="mb-2">{project.name} </h2>
                    <div onClick={(e) => e.stopPropagation()}>
-                      {user?.role === "ADMIN" || (
+                      {user?.role === "ADMIN" && (
                     <PopupMenu>
-                      <Link to={`/project/${project.id}`}>
-                        <button className="w-full text-left">View</button>
-                      </Link>
+                        <button onClick={()=>  navigate(`/project/${project.id}`)} className="w-full text-left">View</button>
+                     
                       <button
                         onClick={() => setEditingId(project.id)}
                         className="w-full text-left"
@@ -134,7 +133,7 @@ export default function Project() {
             <p className="mb-2"> You've not been assigned any project yet!</p>
           )}
 
-          {user?.role === "ADMIN" || (
+          {user?.role === "ADMIN" && (
             <div>
               <button
                 onClick={() => setOpen(true)}

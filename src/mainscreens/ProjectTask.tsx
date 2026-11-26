@@ -41,6 +41,7 @@ import { useState } from "react";
 import { LuPlus } from "react-icons/lu";
 import TaskForm from "@/reuseable-components/TaskForm";
 import ConfirmModal from "@/reuseable-components/Confirmation";
+import PageNotFound from "@/components/PageNotFound";
 
 export default function ProjectTasks() {
   // global state
@@ -63,7 +64,7 @@ export default function ProjectTasks() {
   const editingTask = projectTasks.find((task) => task.id === editingId);
 
   if (!project) {
-    return <p>Project not found.</p>;
+    return <PageNotFound/>;
   }
 
   return (
@@ -74,10 +75,10 @@ export default function ProjectTasks() {
       </button>
       <div className="mt-10 mb-4 flex-center justify-between">
         <p className="font-bold ">
-          {projectTasks.length}{" "}
+          {projectTasks.length}
           {projectTasks.length === 1 ? "Task" : "Tasks"}{" "}
         </p>
-        {user?.role === "ADMIN" || (
+        {user?.role === "ADMIN" && (
           <button
             onClick={() => setOpen(true)}
             className=" flex-center text-nowrap button2 "
@@ -148,7 +149,7 @@ export default function ProjectTasks() {
             <p className="mb-2"> You've not been assigned any task yet!</p>
           )}
 
-          {user?.role === "ADMIN" || (
+          {user?.role === "ADMIN" && (
             <div>
               <button
                 onClick={() => setOpen(true)}

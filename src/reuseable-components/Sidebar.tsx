@@ -41,7 +41,7 @@ import {
   LuChevronRight,
   LuChevronDown,
 } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
@@ -52,6 +52,7 @@ export default function Sidebar() {
   const [showProjectsList, setShowProjectsList] = useState<boolean>(false);
 
   const expand = isExpanded ? "w-full" : "w-max";
+  const navigate = useNavigate();
 
   return (
     <aside className="sticky top-0 h-screen">
@@ -60,15 +61,15 @@ export default function Sidebar() {
     >
       <div className="flex  items-center justify-between  ">
         {isExpanded && (
-          <div className="flex-center px-2 ">
-            <div className="size-7 bg-purple rounded-full font-bold text-white flex items-center justify-center">
-              {user?.name.charAt(0)}A
+          <div className="flex-center px-2  min-w-0">
+            <div className="size-7 bg-purple shrink-0 rounded-full font-bold text-white flex  justify-center">
+              {user?.name.charAt(0)}
             </div>
-            <p>{user?.name} Adeola</p>
+            <p title={user?.name} className="truncate">{user?.name}</p>
           </div>
         )}
 
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center shrink-0">
           {isExpanded && (
             <button onClick={toggleTheme}>
               {theme === "light" ? (
@@ -101,8 +102,7 @@ export default function Sidebar() {
 
 
        {/* PROJECT LIST DROPDOWN ENGINE */}
-       <Link to={"/project"}>
-        <button className={`flex-center justify-between group h-9 ${expand}`}>
+        <button onClick={()=> navigate("/project")} className={`flex-center justify-between group h-9 ${expand}`}>
           <div className="flex-center ">
             <LuFolder className="size-5 group-hover:text-accent" />
             {isExpanded && <p className="phover">Projects</p>}
@@ -119,7 +119,7 @@ export default function Sidebar() {
               )}
             </div>
           )}
-        </button></Link>
+        </button>
 
         {showProjectsList && isExpanded && (
           <div>
@@ -153,12 +153,7 @@ export default function Sidebar() {
   );
 }
 
-// So amigo im done building it i spent 6hours on building this alone , im really concerned abut my slowness although i learnt so much building this
 
-// Learnt how to use the expand
-// learnt how to use boolean to show or hide something
-// learnt how to hide the text only and how to group hover for button text and icon
-// but i was slow spent 3 days on this 2 hours daily we need to adjust going forward
 // also i noticed when i change react icons
 // also i noticed when i change react icons spelling, the whole app triggers why is that
 // also i noticed i repeated several codes here which i believ theres a way i can optimize the code more to follow dry principle

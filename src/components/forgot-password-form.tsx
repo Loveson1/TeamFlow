@@ -12,6 +12,9 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import teamflow from "../assets/images/teamflow.png";
+import { Link } from 'react-router-dom'
+
 
 export function ForgotPasswordForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const [email, setEmail] = useState('')
@@ -40,9 +43,9 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex flex-row gap-6 min-h-screen ', className)} {...props}>
       {success ? (
-        <Card>
+          <Card>
           <CardHeader>
             <CardTitle className="font-medium text-lg tracking-normal">Check Your Email</CardTitle>
             <CardDescription>Password reset instructions sent</CardDescription>
@@ -55,7 +58,8 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
           </CardContent>
         </Card>
       ) : (
-        <Card>
+        <>
+      <div className='w-1/2 flex flex-col justify-center gap-y-6 px-20'>
           <CardHeader>
             <CardTitle className="font-medium text-lg tracking-normal">
               Reset Your Password
@@ -85,13 +89,22 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
               </div>
               <div className="mt-4 text-center text-sm">
                 Already have an account?{' '}
-                <a href="/login" className="underline underline-offset-4">
+                <Link to={"/login"} className="underline underline-offset-4">
                   Sign in
-                </a>
+                </Link>
               </div>
             </form>
           </CardContent>
-        </Card>
+        </div>
+
+<div className="w-1/2 ">
+  <img 
+    src={teamflow} 
+    alt="teamflow" 
+    className="w-full h-full object-cover object-left" 
+  />
+</div>
+</>
       )}
     </div>
   )

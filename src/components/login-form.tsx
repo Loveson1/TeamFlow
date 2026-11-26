@@ -1,11 +1,10 @@
 import { useState } from 'react'
-
+import teamflow from "../assets/images/teamflow.png";
+import flow from  "../assets/videos/flow.webm";
 import { cn } from '@/lib/utils'
-import { safeNextPath } from '@/lib/safe-next-path'
-import { createClient } from '@/lib/utils/client'
+import { supabase } from '@/lib/utils/supabase'
 import { Button } from '@/components/ui/button'
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -13,15 +12,21 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Link, Navigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export default function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const supabase = createClient()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const {loading, user} = useAuth()
+
+  if(loading){ return <div>Loading...</div>}
+  if(user){ return <Navigate to={"/project"} replace/>}
+
+  const handleLogin = async (e: React.SubmitEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
@@ -31,10 +36,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
         email,
         password,
       })
-      if (error) throw error
-      // Update this route to redirect to an authenticated route. The user already has an active session.
-      const next = new URLSearchParams(window.location.search).get('next')
-      location.href = safeNextPath(next, '/protected')
+      if (error) throw error     
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {
@@ -43,10 +45,10 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-medium text-lg tracking-normal">Sign in</CardTitle>
+    <div className={cn('flex  flex-row gap-y-6 min-h-screen ', className)} {...props}>
+  <div className='w-1/2 flex flex-col justify-center gap-6 px-20'>
+        <CardHeader className='mb-4'>
+          <CardTitle className="font-medium text-3xl tracking-normal mb-2">Welcome back!</CardTitle>
           <CardDescription>Enter your email below to sign in to your account</CardDescription>
         </CardHeader>
         <CardContent>
@@ -66,12 +68,12 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="/forgot-password"
+                  <Link
+                    to={"/password"}
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
                 <Input
                   id="password"
@@ -88,13 +90,28 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{' '}
-              <a href="/sign-up" className="underline underline-offset-4">
-                Sign up
-              </a>
+
+             <Link to={"/signup"} className="underline underline-offset-4">
+               Sign up
+                
+              </Link>
+
             </div>
           </form>
         </CardContent>
-      </Card>
+      </div>
+<div className="w-1/2 ">
+  {/* <img 
+    src={teamflow} 
+    alt="teamflow" 
+    className="w-full h-full object-cover object-left" 
+  /> */}
+  
+  <video src={flow}   className="w-full h-full object-cover object-left" muted loop autoPlay></video>
+</div>
+
+
+
     </div>
   )
 }

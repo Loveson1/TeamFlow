@@ -1,7 +1,6 @@
 import { useState } from 'react'
-
 import { cn } from '@/lib/utils'
-import { createClient } from '@/lib/utils/client'
+import { supabase } from '@/lib/utils/supabase'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -12,6 +11,10 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import teamflow from "../assets/images/teamflow.png";
+import { Link, Navigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
+
 
 export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const [email, setEmail] = useState('')
@@ -21,8 +24,12 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    const supabase = createClient()
+   const {loading, user} = useAuth()
+
+  if(loading){ return <div>Loading...</div>}
+  if(user){ return <Navigate to={"/project"} replace/>}
+
+  const handleSignUp = async (e: React.SubmitEvent) => {
     e.preventDefault()
     setError(null)
 
@@ -47,7 +54,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex flex-row min-h-screen gap-6', className)} {...props}>
       {success ? (
         <Card>
           <CardHeader>
@@ -64,9 +71,10 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
           </CardContent>
         </Card>
       ) : (
-        <Card>
+        <>
+    <div className='w-1/2 flex flex-col justify-center gap-y-6 px-20'>
           <CardHeader>
-            <CardTitle className="font-medium text-lg tracking-normal">Sign up</CardTitle>
+            <CardTitle className="font-medium text-3xl tracking-normal">Sign up</CardTitle>
             <CardDescription>Create a new account</CardDescription>
           </CardHeader>
           <CardContent>
@@ -108,19 +116,30 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                   />
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button type="submit" className="w-full button2"  disabled={isLoading}>
                   {isLoading ? 'Creating an account...' : 'Sign up'}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
                 Already have an account?{' '}
-                <a href="/login" className="underline underline-offset-4">
+                <Link to={"/login"} className="underline underline-offset-4">
                   Sign in
-                </a>
+                </Link>
               </div>
             </form>
           </CardContent>
-        </Card>
+        </div>
+
+<div className="w-1/2 ">
+  <img 
+    src={teamflow} 
+    alt="teamflow" 
+    className="w-full h-full object-cover object-left" 
+  />
+</div>
+</>
+
+
       )}
     </div>
   )
